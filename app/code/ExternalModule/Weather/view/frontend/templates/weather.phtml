@@ -1,0 +1,270 @@
+<style>
+    body {
+        text-align: left;
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+    }
+
+    .container {
+        max-width: 600px;
+        margin: 50px auto;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        text-align: left;
+    }
+
+    .intro {
+        text-align: center;
+    }
+
+    .title-icon {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 18px;
+    }
+
+    #title-intro {
+        font-size: 70px;
+        margin-bottom: 0px;
+        font-weight: 600;
+        margin-top: 10px;
+    }
+
+    #icon-intro {
+        height: 90px;
+        width: 90px;
+    }
+
+    #des-intro {
+        margin-top: 0px;
+    }
+
+    .header {
+        text-align: center;
+    }
+
+    .search {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 20px;
+    }
+
+    input[type="text"] {
+        padding: 10px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    #search-btn {
+        background-color: #007bff;
+        color: #fff;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 5px;
+        margin-left: 10px;
+        cursor: pointer;
+    }
+
+    #search-btn:hover {
+        background-color: #0056b3;
+    }
+
+    .main {
+        text-align: center;
+    }
+
+    .city-icon {
+        margin-top: 20px;
+    }
+
+    .city-icon-holder {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #city-name {
+        font-size: 45px;
+        font-weight: bold;
+    }
+
+    #icon {
+        margin-top: 10px;
+        width: 60px;
+        height: 60px;
+    }
+
+    #icon-temp {
+        display: flex;
+        align-items: center; 
+        gap: 10px; 
+    }
+
+    .temperature {
+        margin-top: 10px;
+    }
+
+    #temp {
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+    .des {
+        display: flex;
+        justify-content: space-between;
+        align-items: center; 
+        font-style: italic;
+    }
+
+    .humidity {
+        margin-top: 10px;
+    }
+
+    #humidity-div {
+        font-size: 18px;
+    }
+
+    .description {
+        margin-top: 10px;
+    }
+
+    #description-div {
+        font-size: 18px;
+    }
+    
+    .feels-like {
+        margin-top: 10px;
+    }
+
+    #feels-like-div {
+        font-size: 18px;
+    }
+
+    .wind-speed {
+        margin-top: 10px;
+    }
+
+    #wind-speed-div {
+        font-size: 18px;
+    }
+
+    .clouds {
+        margin-top: 10px;
+    }
+
+    #clouds-div {
+        font-size: 18px;
+    }
+
+    .visibility {
+        margin-top: 10px;
+    }
+
+    #visibility-div {
+        font-size: 18px;
+    }
+</style>
+<div class="intro">
+    <div class="title-icon">
+        <p id="title-intro">Weather</p>
+        <img src="<?php echo $this->getViewFileUrl('ExternalModule_Weather::images/weather-icon.png'); ?>" alt="" id="icon-intro">
+    </div>
+    <p id="des-intro">This weather module displays real-time weather information sourced from an external API</p>
+</div>
+<div class="container">
+    <header class="header">
+    </header>
+    <main id="main">
+        <div class="city-icon">
+            <div class="city-icon-holder">
+                <div id="city-name"></div>
+                <div id="icon-temp">
+                    <img src="" alt="" id="icon">
+                    <div class="temperature">
+                        <div id="temp">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="des">
+            <div class="des-left">
+                <div class="humidity">
+                    <div id="humidity-div">
+                    </div>
+                </div>
+                <div class="description">
+                    <div id="description-div">
+                    </div>
+                </div>
+                <div class="feels-like">
+                    <div id="feels-like-div"></div>
+                </div>
+            </div>
+            <div class="des-right">
+                <div class="wind-speed">
+                    <div id="wind-speed-div"></div>
+                </div>
+                <div class="clouds">
+                    <div id="clouds-div"></div>
+                </div>
+                <div class="visibility">
+                    <div id="visibility-div"></div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+<script type="text/javascript">
+    const appKey = "e7709c4f57603adb2fca2af2251d94df";
+
+    var cityName = document.getElementById("city-name"),
+        icon = document.getElementById("icon"),
+        temperature = document.getElementById("temp"),
+        humidity = document.getElementById("humidity-div"),
+        description = document.getElementById("description-div"),
+        feelsLike = document.getElementById("feels-like-div"),
+        windSpeed = document.getElementById("wind-speed-div"),
+        clouds = document.getElementById("clouds-div"),
+        visibility = document.getElementById("visibility-div");
+
+    document.addEventListener("DOMContentLoaded", () => {
+        findWeatherDetails();
+    });
+
+    function findWeatherDetails() {
+        const appKey = "a73bd615a83d3fab0c40ff1619578268";
+        let searchLink = "https://api.openweathermap.org/data/2.5/weather?lat=21.028511&lon=105.804817" + "&appid=" + appKey;
+        httpRequestAsync(searchLink, theResponse);
+    }
+
+    function theResponse(response) {
+        let jsonObject = JSON.parse(response);
+        cityName.innerHTML = jsonObject.name;
+        icon.src = "http://openweathermap.org/img/w/" + jsonObject.weather[0].icon + ".png";
+        temperature.innerHTML = parseInt(jsonObject.main.temp - 273) + "°C";
+        humidity.innerHTML = "Humidity: " + jsonObject.main.humidity + "%";
+        description.innerHTML = "Description: " + jsonObject.weather[0].description;
+        feelsLike.innerHTML = "Feels like: " + parseInt(jsonObject.main.feels_like - 273) + "°C";
+        windSpeed.innerHTML = "Wind speed: " + jsonObject.wind.speed + " km/h";
+        clouds.innerHTML = "Clouds: " + jsonObject.clouds.all + "%";
+        visibility.innerHTML = "Visibility: " + parseInt(jsonObject.visibility / 1000) + " km";
+    }
+
+    function httpRequestAsync(url, callback) {
+        var httpRequest = new XMLHttpRequest();
+        httpRequest.onreadystatechange = () => {
+            if (httpRequest.readyState == 4 && httpRequest.status == 200)
+                callback(httpRequest.responseText);
+        }
+        httpRequest.open("GET", url, true);
+        httpRequest.send();
+    }
+</script>

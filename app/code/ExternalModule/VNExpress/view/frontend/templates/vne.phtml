@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+<div id="content"></div>
+<style>
+    .article {
+        padding: 4%;
+    }
+    .article > a > img {
+        width: 20%;
+        margin-right: 20px;    
+        float: left;
+    }
+</style>
+<script type="text/javascript">
+    var content = document.getElementById('content');
+
+    var xhr = new XMLHttpRequest();
+
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState==4 && xhr.status==200) {
+            var data = JSON.parse(xhr.responseText);
+            var itemsContainer = document.createElement('DIV');
+
+            if(data.status == 'ok') {
+                for(var i = 0, t = data.items.length; i < t; ++i) {
+                    var item = data.items[i];
+                    var itemContainer = document.createElement('DIV');
+
+                    var itemTitleElement = document.createElement('H3');
+                    var itemLinkElement = document.createElement('A');
+                    var itemDescriptionElement = document.createElement('P');
+                    var itemImageElement = document.createElement('H4');
+                    var itemDivElement = document.createElement('DIV');
+
+                    itemLinkElement.setAttribute('href' , item.link);
+                    itemLinkElement.innerText = item.title;
+                    itemTitleElement.appendChild(itemLinkElement);
+
+                    let temp = item.description.split("</a>");
+                    itemDescriptionElement.innerHTML = temp[1];
+                    itemImageElement.innerHTML = temp[0] + "</a>";
+                    itemDivElement.innerHTML = "<div class=\"article\"\">\n" 
+                        + itemImageElement.innerHTML + "\n" 
+                        + "<h3>" + itemTitleElement.innerHTML + "</h3> \n <br>"
+                        + itemDescriptionElement.innerHTML + "\n <br>"
+                        + "</div>";
+                        itemContainer.appendChild(itemDivElement);
+                    console.log(itemDivElement.innerHTML);
+                    itemsContainer.appendChild(itemContainer);
+                }
+
+                var titleElement = document.createElement('H1');
+                titleElement.innerText = "VNExpress - Business News";
+                
+                var titleImage = document.createElement('img');
+                titleImage.src = "<?php echo $this->getViewFileUrl('ExternalModule_VNExpress::images/logo.png'); ?>";
+                titleImage.alt = '';
+                titleImage.id = 'icon-intro';
+                content.appendChild(titleImage);
+                content.appendChild(itemsContainer);
+            }
+        }
+    };
+    xhr.open(
+        'GET',
+        'https://api.rss2json.com/v1/api.json?rss_url=https%3A%2F%2Fvnexpress.net%2Frss%2Fkinh-doanh.rss',
+        true
+    );
+    xhr.send();
+
+</script>
+</body>
+</html>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tỷ giá Vietcombank</title>
+    <style>
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+        table {
+            border-collapse: collapse;
+            overflow: hidden;
+            width: 100%;
+            margin-top: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        th, td {
+            padding: 1em;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+        tr:nth-child(odd) {
+            background-color: #f2f2f2;
+        }
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+        img {
+            vertical-align: middle;
+            margin-right: 5px;
+        }
+        h1 {
+            text-align: center;
+            color: #007bff;
+        }
+        #update-time {
+            text-align: center;
+            margin-top: 10px;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <h1>Exchange Rate Vietcombank</h1>
+    <p id="update-time"></p>
+    <table>
+        <thead>
+            <tr>
+                <th>Currency Code</th>
+                <th>Currency Name</th>
+                <th>Cash</th>
+                <th>Bank transfer</th>
+                <th>Purchase</th>
+            </tr>
+        </thead>
+        <tbody id="exchange-rates"></tbody>
+    </table>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const url = "https://portal.vietcombank.com.vn/Usercontrols/TVPortal.TyGia/pXML.aspx";
+
+            // Fetch data from Vietcombank API
+            fetch(url)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! Status: ${response.status}`);
+                    }
+                    return response.text(); // Get the response as text (XML format)
+                })
+                .then(data => {
+                    // Parse the XML response
+                    const parser = new DOMParser();
+                    const xml = parser.parseFromString(data, "application/xml");
+
+                    // Get the updated time
+                    const updateTime = xml.querySelector("DateTime").textContent;
+                    document.getElementById("update-time").textContent = `Cập nhật lúc: ${updateTime}`;
+
+                    // Get the exchange rates and build the table rows
+                    const exchangeRates = xml.querySelectorAll("Exrate");
+                    const tbody = document.getElementById("exchange-rates");
+                    exchangeRates.forEach(rate => {
+                        const currencyCode = rate.getAttribute("CurrencyCode");
+                        const currencyName = rate.getAttribute("CurrencyName");
+                        const buy = rate.getAttribute("Buy");
+                        const transfer = rate.getAttribute("Transfer");
+                        const sell = rate.getAttribute("Sell");
+
+                        const row = `
+                            <tr>
+                                <td>
+                                    <img src="https://wise.com/public-resources/assets/flags/rectangle/${currencyCode.toLowerCase()}.png" alt="${currencyCode}" width="27" height="18">
+                                    ${currencyCode}
+                                </td>
+                                <td>${currencyName}</td>
+                                <td>${buy}</td>
+                                <td>${transfer}</td>
+                                <td>${sell}</td>
+                            </tr>
+                        `;
+                        tbody.insertAdjacentHTML("beforeend", row);
+                    });
+                })
+                .catch(error => {
+                    console.error("Error fetching exchange rates:", error);
+                    document.getElementById("exchange-rates").innerHTML = `<tr><td colspan="5">Không thể tải dữ liệu</td></tr>`;
+                });
+        });
+    </script>
+</body>
+</html>

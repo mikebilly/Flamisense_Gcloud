@@ -1,0 +1,60 @@
+
+<div class="container">
+    <div class="row">
+        <h4 style="margin-top: 20px">Hướng dẫn sử dụng </h4>
+        <ul class="list-unstyled">
+                        <li>Lấy thông tin sản phẩm bằng ID của sản phẩm(đầu vào là số),tìm kiếm sản phẩm(khi đầu vào là chữ cái) .
+                            <ul>http://flamisense.id.vn/rest/V1/products/id/:id
+				<li>Với :id thay bằng id của sản phẩm vd: id = 80</li>
+				<li>Với :id thay bằng chữ bất kì, thông tin được trả ra sẽ là sản phẩm có kí tự đó trong tên VD: thày ":id"="Mini"</li>
+                            </ul>
+                        </li>
+                        <li>Lấy thông tin sản phẩm bằng SKU của sản phẩm.
+                            <ul>http://flamisense.id.vn/rest/V1/products/sku/:sku
+                                (với :sku thay bằng SKU của sản phẩm vd: sku = SRPG25J1)
+                            </ul>
+                        </li>
+                        <li>Lấy thông tin các sản phẩm có cùng Category ID và Category Name.
+                            <ul>http://flamisense.id.vn/rest/V1/products/category/:cid
+			     <li>   Với :cid thay bằng CategoryId vd: cid = 20</li>
+				<li> Với :cid thay bằng kí tự trong CategoryName VD: ":cid"="Gundam"
+                            </ul>
+                        </li>
+        </ul>
+    </div>
+</div>
+<style>
+    /* Custom CSS */
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f8f8f8;
+    }
+
+    .container {
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 5px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    h4 {
+        margin-top: 0;
+        color: #333;
+    }
+
+    ul.list-unstyled {
+        margin-bottom: 20px;
+    }
+
+    ul.list-unstyled li {
+        margin-bottom: 10px;
+    }
+
+    ul.list-unstyled ul {
+        margin-left: 20px;
+    }
+
+    ul.list-unstyled ul li {
+        margin-bottom: 5px;
+    }
+</style>
