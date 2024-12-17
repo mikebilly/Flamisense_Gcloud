@@ -7,7 +7,7 @@
                 <sallowspecific>0</sallowspecific>
                 <model>Delivery\XanhSM\Model\Carrier\Shipping</model>
                 <name>Xanh Sm Delivery Method</name>
-                <price>10.00</price>
+                <price>50000</price>
                 <title>Xanh Sm Shipping</title>
                 <specificerrmsg>This shipping method is not available. To use this shipping method, please contact us.</specificerrmsg>
                 <handling_type>F</handling_type>

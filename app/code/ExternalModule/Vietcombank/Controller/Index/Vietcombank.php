@@ -18,6 +18,8 @@ class Vietcombank extends Action
 
     public function execute()
     {
-        return $this->pageFactory->create();
+        $resultPage = $this->pageFactory->create();
+        $resultPage->getConfig()->getTitle()->set(__('Exchange Rates'));
+        return $resultPage;
     }
 }
