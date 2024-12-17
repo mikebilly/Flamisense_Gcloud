@@ -1,0 +1,71 @@
+# Ignore everything by default
+*
+
+# Whitelist .gitignore itself
+!.gitignore
+
+# Allow specific directories and files under `app`
+!/app/
+!/app/code/
+!/app/code/**
+!/app/design/
+!/app/design/**
+
+# Allow specific directories and files under `pub/media`
+!/pub/
+!/pub/media/
+!/pub/media/catalog/
+!/pub/media/catalog/product/
+!/pub/media/catalog/product/**
+!/pub/media/logo/
+!/pub/media/logo/default/
+!/pub/media/logo/default/**
+!/pub/media/logo/stores/
+!/pub/media/logo/stores/**
+
+/pub/media/catalog/product/cache
+/pub/media/catalog/product/cache/**
+
+!/pub/media/TMDT/
+!/pub/media/TMDT/**
+!/pub/media/wysiwyg/
+!/pub/media/wysiwyg/**
+
+!/var/
+!/var/import/
+!/var/import/images
+!/var/import/images/**
+
+# Ignore specific files and cache
+*.log
+*.cache
+*.gz
+*.bak
+.sass-cache
+.phpunit.result.cache
+
+# Environment and configuration files
+/.env
+.DS_Store
+.idea/
+.nbproject/
+*.swp
+*.swo
+.phpstorm.meta.php
+
+# System files
+.DS_Store
+.AppleDouble
+.LSOverride
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# IDE and editor files
+.vscode/
+*.iml
+*.sublime-project
+*.sublime-workspace
+
+# Optional: Ignore test directories
+dev/tests/
