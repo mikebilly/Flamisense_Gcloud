@@ -1,62 +1,59 @@
-# Ignore everything by default
-*
+# Magento-specific files
+/app/etc/env.php          
+/app/etc/config.php            
 
-# Whitelist .gitignore itself
-!.gitignore
+/*.bat
 
-# Allow specific directories and files under `app`
-!/app/
-!/app/code/
-!/app/code/**
-!/app/design/
-!/app/design/**
+# Magento generated files
+/generated/
+/pub/static/
+/var/
+/lib/internal/
+/phpserver/
 
-# Allow specific directories and files under `pub/media`
-!/pub/
-!/pub/media/
-!/pub/media/catalog/
-!/pub/media/catalog/product/
-!/pub/media/catalog/product/**
-!/pub/media/logo/
-!/pub/media/logo/default/
-!/pub/media/logo/default/**
-!/pub/media/logo/stores/
-!/pub/media/logo/stores/**
+# Magento cache and temporary files, excluding essential media files
+/var/cache/
+/var/page_cache/
+/var/view_preprocessed/
+/pub/media/tmp              # Temporary media files
+/pub/media/catalog/product/cache  # Cached product images
 
-/pub/media/catalog/product/cache
-/pub/media/catalog/product/cache/**
+# Include necessary media files but exclude temporary files
+!/pub/media/catalog/product
+!/pub/media/catalog/category
 
-!/pub/media/TMDT/
-!/pub/media/TMDT/**
-!/pub/media/wysiwyg/
-!/pub/media/wysiwyg/**
+# Magento 2 sample data modules
+/app/code/Magento/SampleData/
 
-!/var/
-!/var/import/
-!/var/import/images
-!/var/import/images/**
+# Composer and Node dependencies
+/vendor/
+node_modules/
+composer.lock
 
-# Ignore specific files and cache
+# Cache and log files
 *.log
 *.cache
 *.gz
 *.bak
-.sass-cache
-.phpunit.result.cache
 
-# Environment and configuration files
+/app/etc/env.php          
+/app/etc/config.php
+
+# Environment-specific files
 /.env
 .DS_Store
 .idea/
-.nbproject/
-*.swp
+/nbproject/
+/*.swp
 *.swo
 .phpstorm.meta.php
 
-# System files
+# OSX system files
 .DS_Store
 .AppleDouble
 .LSOverride
+
+# Windows system files
 Thumbs.db
 ehthumbs.db
 Desktop.ini
@@ -66,6 +63,13 @@ Desktop.ini
 *.iml
 *.sublime-project
 *.sublime-workspace
+.phpstorm.meta.php
 
-# Optional: Ignore test directories
+# SASS cache
+.sass-cache
+
+# PHPUnit result cache
+.phpunit.result.cache
+
+# Ignore test directories (optional)
 dev/tests/
